@@ -148,7 +148,8 @@ const routers: IRouterSet = {
 
 ### TODO
 后续可能我会陆续添加以下功能（取决于我有没有那么多时间23333）:
-- [ ] 基于react的高阶组件定义一个withAuthorization
+- [x] 基于react的高阶组件定义一个withAuthorization
+- [ ] 添加路由参数
 
 Ps.其他功能我还在想...
 

@@ -47,6 +47,19 @@ function RouterView(props: IRouterViewProps) {
     )
 }
 
+export function withAuthorize(checkFun: () => boolean, Component?: any) {
+    return function (WrappedComponent: any) {
+        return class extends React.Component<any, any> {
+            constructor(props: any) {
+                super(props)
+            }
+            render() {
+                return checkFun() ? <WrappedComponent {...this.props} /> : <Component /> || <h1>你没有权限</h1>
+            }
+        }
+    }
+}
+
 export interface IRouterSet {
     [path: string]: {
         name: string
