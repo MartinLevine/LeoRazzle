@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch, withRouter } from 'react-router-dom'
+import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
 import routers from '../../routers'
 
 function mapPathRoutes(path: string) {
@@ -35,14 +35,16 @@ interface IRouterViewProps {
 
 function RouterView(props: IRouterViewProps) {
     const { history, location, match, path } = props
+    const routerArr = mapPathRoutes(path || '/')
     return (
         <Switch>
             {
                 // Object.keys(routers).map(path => {
                 //     return <Route key={path} exact path={`/${path}`} component={routers[path].component} />
                 // })
-                mapPathRoutes(path || '/')
+                routerArr
             }
+            <Redirect key={path} from={path} to={routerArr[0].props.path} />
         </Switch>
     )
 }
@@ -54,7 +56,7 @@ export function withAuthorize(checkFun: () => boolean, Component?: any) {
                 super(props)
             }
             render() {
-                return checkFun() ? <WrappedComponent {...this.props} /> : <Component /> || <h1>你没有权限</h1>
+                return checkFun() ? <WrappedComponent {...this.props} /> : Component || <h1>你没有权限</h1>
             }
         }
     }

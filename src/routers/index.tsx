@@ -4,6 +4,15 @@ import { IRouterSet, withAuthorize } from '../widgets/RouterView'
 import Home from '../pages/Home'
 import Contact from '../pages/Contact'
 
+function CheckAuth(component: any) {
+    return withAuthorize(
+        () => localStorage.getItem('token') as any,
+        // 你也可以直接重定向到某个页面
+        // <Redirect to="/home/welcome"></Redirect>
+        <h1>你没有权限访问这个页面，这个是自定义无权限组件</h1>
+    )(component)
+}
+
 const routers: IRouterSet = {
     home: {
         name: 'Home',
@@ -15,10 +24,7 @@ const routers: IRouterSet = {
             },
             link: {
                 name: 'Link',
-                component: withAuthorize(
-                    () => localStorage.getItem('token') as any,
-                    NoAuth
-                )(() => <h2>这里是Link子路由</h2>)
+                component: CheckAuth(() => <h2>这里是Link子路由</h2>)
             },
             welcome: {
                 name: 'Welcome',
@@ -31,12 +37,6 @@ const routers: IRouterSet = {
             }
         }
     }
-}
-
-function NoAuth() {
-    // 你也可以直接重定向到某个页面
-    // <Redirect to="/home/welcome"></Redirect>
-    return <h1>你没有权限访问这个页面，这个是自定义无权限组件</h1>
 }
 
 export default routers
