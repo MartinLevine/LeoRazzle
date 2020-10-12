@@ -1,0 +1,46 @@
+.logo {
+    animation: Home-logo-spin infinite 20s linear;
+    height: 200px;
+    margin: 2rem;
+}
+
+
+.container {
+    background-color: #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > .wrap {
+        height: 100vh;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        > .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+
+            > li {
+                margin: 0 20px;
+                > a {
+                    font-size: .5rem;
+                    color: #fff;
+                }
+            }
+        }
+    }
+}
+
+@keyframes Home-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
