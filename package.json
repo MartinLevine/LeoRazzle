@@ -1,7 +1,8 @@
 {
-    "name": "com.leogemini.react.ssr.template",
+    "name": "leorazzle",
     "version": "1.0.0",
     "license": "MIT",
+    "author": "Next5Studio - 404 Not Found.",
     "scripts": {
         "start:tsc": "tsc -b -w --preserveWatchOutput",
         "start": "yarn start:tsc & razzle start",
