@@ -50,6 +50,7 @@ yarn
 - 修改路由表定义
 ```typescript
 // src/routers/index.tsx
+
 import React from 'react'
 import { IRouterSet } from '../widgets/RouterView'
 import Contact from '../pages/Contact'
@@ -77,3 +78,78 @@ const routers: IRouterSet = {
 
 export default routers
 ```
+
+- 在需要使用嵌套路由的地方加入RouterView
+```typescript
+// src/pages/Home/index.tsx
+
+import React from 'react'
+import RouterView from '../../widgets/RouterView'
+import logo from '../../assets/react.svg'
+import style from './style.module.scss'
+import { Link } from 'react-router-dom'
+
+function Home(props: any) {
+    return (
+        <div className={style.container}>
+            <div className={style.wrap}>
+                <ul className={style.navbar}>
+                    <li>
+                        <Link to="/home/welcome">Welcome</Link>
+                    </li>
+                    <li>
+                        <Link to="/home/link">Link</Link>
+                    </li>
+                    <li>
+                        <Link to="/home/contact">Contact</Link>
+                    </li>
+                </ul>
+                <img src={logo} className={style.logo} alt="logo" />
+                <RouterView path="/home" />
+            </div>
+        </div>
+    )
+}
+
+export default Home
+```
+
+就是这么简单，RouterView会根据你指定的path属性去读取路由表中的对象，需要注意的是，路由表对象的接口定义如下：
+```typescript
+// src/widgets/RouterView/index.tsx
+
+export interface IRouterSet {
+    [path: string]: {
+        name: string
+        component: any
+        exact?: boolean
+        children?: IRouterSet
+    }
+}
+```
+
+也就是说，假设你的第一层路由有两个：`/home` 跟 `/shop`，其中 `/home` 下有两个二层的子路由： `/about` 跟 `/contact` 那么你的路由表应该这么定义
+```typescript
+const routers: IRouterSet = {
+    home: {
+        ...
+        ...
+        children: {
+            about: { ... },
+            contact: { ... }
+        }
+    },
+    shop: {
+        ...
+    }
+}
+```
+是的没错，IRouterSet对象中的keys就是路由匹配的路径，当浏览器地址栏改变时RouterView会自动匹配路由跟它前面层级的路由路径，比如 `/home/about` 就会匹配到路由表中的 `/home` 下面的 `/about`，并渲染其中的component
+
+### TODO
+后续可能我会陆续添加以下功能（取决于我有没有那么多时间23333）:
+- [ ] 基于react的高阶组件定义一个withAuthorization
+
+Ps.其他功能我还在想...
+
+有啥想法可以提iss，我会再看的
