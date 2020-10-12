@@ -1,6 +1,7 @@
 # LeoRazzle - 基于Razzle的脚手架开发工具
 **警告：这个脚手架基于Razzle的基础上进行搭建**  
-[点击这里查看Razzle的详细文档说明](https://razzlejs.org/getting-started).
+查看详细的razzle中间件配置、文档或其他说明
+[点击这里](https://razzlejs.org/getting-started).
 
 ![repo-banner](https://user-images.githubusercontent.com/4060187/28923990-050a32d4-782e-11e7-9da7-574ce5a8b455.png)
 
