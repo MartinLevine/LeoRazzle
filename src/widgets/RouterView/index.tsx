@@ -38,12 +38,7 @@ function RouterView(props: IRouterViewProps) {
     const routerArr = mapPathRoutes(path || '/')
     return (
         <Switch>
-            {
-                // Object.keys(routers).map(path => {
-                //     return <Route key={path} exact path={`/${path}`} component={routers[path].component} />
-                // })
-                routerArr
-            }
+            {routerArr}
             <Redirect key={path} from={path} to={routerArr[0].props.path} />
         </Switch>
     )

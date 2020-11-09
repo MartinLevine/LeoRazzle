@@ -20,7 +20,7 @@ const routers: IRouterSet = {
         children: {
             contact: {
                 name: 'Contact',
-                component: Contact
+                component: CheckAuth(Contact)
             },
             link: {
                 name: 'Link',
