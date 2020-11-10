@@ -68,23 +68,37 @@ export function withAuthorize(checkFun: () => boolean, Component?: any) {
 }
 
 export function withParameters(template: string, WrappedComponent: any) {
-    // 处理成 http://localhost:3000/home/123123/post/456/emm/789/123/45 形式
-    const regex = new RegExp(template.replace(/(\/|\?|&)\{\w+\}/g, '/(.*)'))
-    const source = window.location.href.replace(/(\?|&)\w+=/g, '/')
-
-    const values = regex.exec(source)
-    const keys = template.match(/\{(?<key>\w+)\}/g)!
-    const params: any = {}
-    if (values && keys) {
-        for (let i = 0, j = keys.length - 1; i <= j; i++, j--) {
-            params[keys[i].substring(1, keys[i].length - 1)] = values[i + 1]
-            params[keys[j].substring(1, keys[j].length - 1)] = values[j + 1]
-        }
-    }
-
     return class extends React.Component<any, any> {
+        constructor(props: any) {
+            super(props)
+            this.state = {
+                params: {}
+            }
+        }
+
+        componentDidMount() {
+            // 处理成 http://localhost:3000/home/123123/post/456/emm/789/123/45 形式
+            const regex = new RegExp(template.replace(/(\/|\?|&)\{\w+\}/g, '/(.*)'))
+            const source = window.location.href.replace(/(\?|&)\w+=/g, '/')
+
+            const values = regex.exec(source)
+            const keys = template.match(/\{(?<key>\w+)\}/g)!
+
+            const params: any = {}
+            if (values && keys) {
+                for (let i = 0, j = keys.length - 1; i <= j; i++, j--) {
+                    params[keys[i].substring(1, keys[i].length - 1)] = values[i + 1]
+                    params[keys[j].substring(1, keys[j].length - 1)] = values[j + 1]
+                }
+            }
+
+            this.setState({
+                params
+            })
+        }
+
         render() {
-            return <WrappedComponent {...this.props} params={params} />
+            return <WrappedComponent {...this.props} params={this.state.params} />
         }
     }
 }

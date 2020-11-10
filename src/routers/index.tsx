@@ -35,7 +35,7 @@ const routers: IRouterSet = {
             },
             params: {
                 name: 'Params',
-                component: withParameters('/home/params/{pid}?{cid}&{uid}', Params)
+                component: Params
             }
         }
     }
