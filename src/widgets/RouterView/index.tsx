@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
 import routers from '../../routers'
 
@@ -49,9 +49,19 @@ export function withAuthorize(checkFun: () => boolean, Component?: any) {
         return class extends React.Component<any, any> {
             constructor(props: any) {
                 super(props)
+                this.state = {
+                    isAuth: false
+                }
             }
+
+            componentDidMount() {
+                this.setState({
+                    isAuth: checkFun()
+                })
+            }
+
             render() {
-                return checkFun() ? <WrappedComponent {...this.props} /> : Component || <h1>你没有权限</h1>
+                return this.state.isAuth ? <WrappedComponent {...this.props} /> : Component || <h1>你没有权限</h1>
             }
         }
     }

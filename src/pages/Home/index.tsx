@@ -18,6 +18,9 @@ function Home(props: any) {
                     <li>
                         <Link to="/home/contact">Contact</Link>
                     </li>
+                    <li>
+                        <Link to="/home/params">Params</Link>
+                    </li>
                 </ul>
                 <img src={logo} className={style.logo} alt="logo" />
                 <RouterView path="/home" />
